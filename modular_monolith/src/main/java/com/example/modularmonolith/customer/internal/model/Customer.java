@@ -1,4 +1,4 @@
-package com.example.modularmonolith.customer.internal;
+package com.example.modularmonolith.customer.internal.model;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,11 +1,9 @@
-package com.example.modularmonolith.order.internal;
+package com.example.modularmonolith.order.internal.model.response;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class Order {
+public class OrderResponse {
 
     private int id;
     private double price;
