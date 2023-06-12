@@ -1,7 +1,7 @@
 package com.example.apigateway.controller.order;
 
-import com.example.apigateway.model.order.Order;
-import com.example.apigateway.model.order.input.CreateOrderInput;
+import com.example.apigateway.model.order.OrderResponse;
+import com.example.apigateway.model.order.input.OrderRequest;
 import com.example.apigateway.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -18,17 +18,16 @@ public class OrderController {
     private final OrderService orderService;
 
     @QueryMapping
-    public List<Order> orders() {
+    public List<OrderResponse> orders() {
         return orderService.getAll();
     }
 
     @QueryMapping
-    public List<Order> ordersByCustomerId(@Argument int customerId) {
+    public List<OrderResponse> ordersByCustomerId(@Argument int customerId) {
         return orderService.getAllByCustomerId(customerId);
     }
-
     @MutationMapping
-    public Order createOrder(@Argument CreateOrderInput input) {
-        return orderService.createOrder(Order.builder().price(input.price()).customerId(input.customerId()).build());
+    public OrderResponse createOrder(@Argument OrderRequest orderRequest) {
+        return orderService.createOrder(orderRequest);
     }
 }

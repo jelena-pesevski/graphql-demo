@@ -1,4 +1,4 @@
-type Order {
+type OrderResponse {
     id: ID!
     price: Float!
     customerId: Int!

@@ -1,6 +1,6 @@
 type Query{
-    customers: [Customer!]!
-    customerById(id:ID): Customer
-    orders: [Order!]!
-    ordersByCustomerId(customerId:ID): [Order!]!
+    customers: [CustomerResponse!]!
+    customerById(id:ID): CustomerResponse
+    orders: [OrderResponse!]!
+    ordersByCustomerId(customerId:ID): [OrderResponse!]!
 }

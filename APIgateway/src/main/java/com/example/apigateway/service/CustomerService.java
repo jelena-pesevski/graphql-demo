@@ -1,7 +1,7 @@
 package com.example.apigateway.service;
 
 import com.example.apigateway.feign.CustomerClient;
-import com.example.apigateway.model.customer.Customer;
+import com.example.apigateway.model.customer.CustomerResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,14 @@ public class CustomerService {
 
     private final CustomerClient customerClient;
 
-    public List<Customer> getAll() {
+    public List<CustomerResponse> getAll() {
         log.info("API Gateway -  sending get all customers request to modulith");
         return customerClient.getAll();
+    }
+
+    public CustomerResponse getById(int id){
+        log.info("API Gateway -  sending get customer by id request to modulith");
+        return customerClient.getById(id);
     }
 
 }

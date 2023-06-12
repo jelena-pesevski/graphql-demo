@@ -1,8 +1,8 @@
 package com.example.apigateway.service;
 
 import com.example.apigateway.feign.OrderClient;
-import com.example.apigateway.model.customer.Customer;
-import com.example.apigateway.model.order.Order;
+import com.example.apigateway.model.order.OrderResponse;
+import com.example.apigateway.model.order.input.OrderRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,17 +16,17 @@ public class OrderService {
 
     private final OrderClient orderClient;
 
-    public List<Order> getAll() {
+    public List<OrderResponse> getAll() {
         log.info("API Gateway -  sending get all orders request to modulith");
         return orderClient.getAll();
     }
 
-    public List<Order> getAllByCustomerId(int customerId){
+    public List<OrderResponse> getAllByCustomerId(int customerId){
         return orderClient.getAllByCustomerId(customerId);
     }
 
-    public Order createOrder(Order order){
+    public OrderResponse createOrder(OrderRequest orderRequest){
         log.info("API Gateway - sending create order request to modulith");
-        return orderClient.createOrder(order);
+        return orderClient.createOrder(orderRequest);
     }
 }

@@ -1,10 +1,9 @@
-input CreateOrderInput{
-    id: ID
+input OrderRequest{
     price: Float!
-    customerId: Int
+    customerId: Int!
 }
 
 type Mutation {
-    createOrder(input:CreateOrderInput!):Order
+    createOrder(orderRequest:OrderRequest!):OrderResponse
 }
 

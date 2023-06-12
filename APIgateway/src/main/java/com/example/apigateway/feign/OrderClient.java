@@ -1,6 +1,7 @@
 package com.example.apigateway.feign;
 
-import com.example.apigateway.model.order.Order;
+import com.example.apigateway.model.order.OrderResponse;
+import com.example.apigateway.model.order.input.OrderRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +14,11 @@ import java.util.List;
 public interface OrderClient {
 
     @GetMapping("/orders")
-    List<Order> getAll();
+    List<OrderResponse> getAll();
 
     @GetMapping("/orders/customer/{customerId}")
-    List<Order> getAllByCustomerId(@PathVariable int customerId);
+    List<OrderResponse> getAllByCustomerId(@PathVariable int customerId);
 
     @PostMapping("/orders")
-    Order createOrder(@RequestBody Order order);
+    OrderResponse createOrder(@RequestBody OrderRequest orderRequest);
 }
