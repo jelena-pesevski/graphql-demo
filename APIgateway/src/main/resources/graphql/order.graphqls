@@ -1,0 +1,6 @@
+type Order {
+    id: ID!
+    price: Float!
+    customerId: Int!
+}
+

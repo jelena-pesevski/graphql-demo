@@ -1,0 +1,7 @@
+config:
+  main-app:
+    url: http://localhost:9000
+spring:
+  graphql:
+    graphiql:
+      enabled: true

@@ -1,0 +1,10 @@
+input CreateOrderInput{
+    id: ID
+    price: Float!
+    customerId: Int
+}
+
+type Mutation {
+    createOrder(input:CreateOrderInput!):Order
+}
+
