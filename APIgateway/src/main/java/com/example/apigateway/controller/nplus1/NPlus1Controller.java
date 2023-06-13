@@ -26,17 +26,17 @@ public class NPlus1Controller {
 
     private final NPlus1Client nPlus1Client;
 
-    public NPlus1Controller(NPlus1Client nPlus1Client, BatchLoaderRegistry batchLoaderRegistry) {
-        this.nPlus1Client = nPlus1Client;
-
-        batchLoaderRegistry.forTypePair(Integer.class, Vet.class)
-                .registerBatchLoader(
-                        (List<Integer> ids, BatchLoaderEnvironment env) -> {
-                            log.info("Loading vets with ids {}", ids);
-                            Flux<Vet>
-                        }
-                );
-    }
+//    public NPlus1Controller(NPlus1Client nPlus1Client, BatchLoaderRegistry batchLoaderRegistry) {
+//        this.nPlus1Client = nPlus1Client;
+//
+//        batchLoaderRegistry.forTypePair(Integer.class, Vet.class)
+//                .registerBatchLoader(
+//                        (List<Integer> ids, BatchLoaderEnvironment env) -> {
+//                            log.info("Loading vets with ids {}", ids);
+//                            Flux<Vet>
+//                        }
+//                );
+//    }
 
     @QueryMapping
     List<Vet> vets() {
@@ -71,16 +71,16 @@ public class NPlus1Controller {
     //when CompleteableFutures and DataLoaders are introduced, schema mapping is still called
     //each time, but it doesn't make all calls to REST API
     @SchemaMapping(typeName = "Visit")
-    public CompletableFuture<Vet> treatingVet(Visit visit, DataFetchingEnvironment env, DataLoader<Integer, Vet> dataLoader) {
+    public Vet treatingVet(Visit visit, DataFetchingEnvironment env, DataLoader<Integer, Vet> dataLoader) {
         if (visit.getTreatingVetId() == null) {
             return null;
         }
 
         log.info("Delegating loading of Vet with id {} from REST", visit.getTreatingVetId());
 
-        return dataLoader.load(visit.getTreatingVetId());
+      //  return dataLoader.load(visit.getTreatingVetId());
 
-        // return client.getVetById(visit.getTreatingVetId());
+         return nPlus1Client.getVetById(visit.getTreatingVetId());
     }
 
 }
