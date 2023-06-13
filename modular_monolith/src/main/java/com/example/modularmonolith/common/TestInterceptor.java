@@ -14,8 +14,8 @@ public class TestInterceptor implements HandlerInterceptor {
             (HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        log.info("Received token {}", token);
+//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        log.info("Received token {}", token);
 
         return true;
     }
