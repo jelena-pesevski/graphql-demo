@@ -21,11 +21,13 @@ public class OrderService {
         return orderClient.getAll();
     }
 
-    public List<OrderResponse> getAllByCustomerId(int customerId){
+    public List<OrderResponse> getAllByCustomerId(int customerId) {
+        log.info("API Gateway -  sending get orders by customer id request to modulith");
+
         return orderClient.getAllByCustomerId(customerId);
     }
 
-    public OrderResponse createOrder(OrderRequest orderRequest){
+    public OrderResponse createOrder(OrderRequest orderRequest) {
         log.info("API Gateway - sending create order request to modulith");
         return orderClient.createOrder(orderRequest);
     }

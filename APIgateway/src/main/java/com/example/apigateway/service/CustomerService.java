@@ -20,9 +20,12 @@ public class CustomerService {
         return customerClient.getAll();
     }
 
-    public CustomerResponse getById(int id){
+    public CustomerResponse getById(int id) {
+        String token = "token";
+
         log.info("API Gateway -  sending get customer by id request to modulith");
-        return customerClient.getById(id);
+
+        return customerClient.getById(token, id);
     }
 
 }

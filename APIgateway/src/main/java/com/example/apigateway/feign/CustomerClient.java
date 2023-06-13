@@ -2,8 +2,10 @@ package com.example.apigateway.feign;
 
 import com.example.apigateway.model.customer.CustomerResponse;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
@@ -14,6 +16,6 @@ public interface CustomerClient {
     List<CustomerResponse> getAll();
 
     @GetMapping("/customers/{id}")
-    CustomerResponse getById(@PathVariable int id);
+    CustomerResponse getById(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken, @PathVariable int id);
 
 }
