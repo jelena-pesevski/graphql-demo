@@ -49,4 +49,13 @@ public class NPlus1TestController {
         return DataUtil.pets.stream().filter(pet -> pet.getId() == id).findFirst().orElse(null);
     }
 
+    @GetMapping("/vets/ids")
+    List<Vet> getVetsWithIds(List<Integer> ids) {
+        return DataUtil.vets.stream().filter(vet -> isIdPresent(vet.getId(), ids)).toList();
+    }
+
+    private boolean isIdPresent(int id, List<Integer> ids) {
+        return ids.stream().anyMatch(requestedId -> requestedId == id);
+    }
+
 }

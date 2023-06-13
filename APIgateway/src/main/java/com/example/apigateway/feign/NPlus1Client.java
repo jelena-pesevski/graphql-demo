@@ -27,4 +27,7 @@ public interface NPlus1Client {
     @GetMapping("/test/pets/{id}")
     Pet getPetById(@PathVariable int id);
 
+    @GetMapping("/vets/ids")
+    List<Vet> getVetsWithIds(List<Integer> ids);
+
 }

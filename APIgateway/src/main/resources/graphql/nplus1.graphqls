@@ -1,15 +1,3 @@
-
-directive @trace on FIELD
-"""Enable trace informations in human readable string format on the extensions field.
-
-Use this directive on your most top-level field to enable tracing information
-
-Note: this will also log trivial datafetchers, whereas `@trace` adds non trivial
-datafetchers
-"""
-directive @traceAll on FIELD
-
-
 # A Vetenerian
 type Vet {
     id: Int!
