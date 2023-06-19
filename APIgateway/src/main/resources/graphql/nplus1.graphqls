@@ -1,15 +1,16 @@
 type Book {
-    id : ID
+    id : ID!
     name : String
     author: String
     price: Float
-    ratings: [Rating]
+    ratings: [Rating]!
 }
 
 type Rating {
-    id: ID
+    id: ID!
     rating: Int
     comment: String
     user: String
+    bookId: Int!
 }
 

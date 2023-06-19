@@ -5,10 +5,13 @@ import com.example.apigateway.model.nplus1.Book;
 import com.example.apigateway.model.nplus1.Rating;
 import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.execution.BatchLoaderRegistry;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -37,6 +40,18 @@ public class NPlus1Controller {
     public List<Book> books() {
         log.info("Delegating request for getting all books...");
         return client.getAllBooks();
+    }
+
+    @QueryMapping
+    public List<Rating> ratingsByBookId(@Argument int bookId){
+        log.info("Delegating request for getting all ratings for book with id: {}", bookId);
+        return client.getRatingsByBookId(bookId);
+    }
+
+    @QueryMapping
+    public Book bookById(@Argument int id){
+        log.info("Delegating request for getting all ratings for book with id: {}", id);
+        return client.getBookById(id);
     }
 
     //@SchemaMapping which solves n+1 problem using DataLoader
