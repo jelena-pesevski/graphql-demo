@@ -10,8 +10,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.execution.BatchLoaderRegistry;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -43,13 +41,13 @@ public class NPlus1Controller {
     }
 
     @QueryMapping
-    public List<Rating> ratingsByBookId(@Argument int bookId){
+    public List<Rating> ratingsByBookId(@Argument int bookId) {
         log.info("Delegating request for getting all ratings for book with id: {}", bookId);
         return client.getRatingsByBookId(bookId);
     }
 
     @QueryMapping
-    public Book bookById(@Argument int id){
+    public Book bookById(@Argument int id) {
         log.info("Delegating request for getting all ratings for book with id: {}", id);
         return client.getBookById(id);
     }
