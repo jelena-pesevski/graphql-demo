@@ -7,11 +7,9 @@ spring:
     graphiql:
       enabled: true
 
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: FULL
+logging:
+  level:
+    feign: debug
 
 
 
