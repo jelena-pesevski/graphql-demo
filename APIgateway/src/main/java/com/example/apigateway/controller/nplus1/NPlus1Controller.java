@@ -1,17 +1,17 @@
 package com.example.apigateway.controller.nplus1;
 
 import com.example.apigateway.feign.NPlus1Client;
-import com.example.apigateway.model.nplus1.Pet;
-import com.example.apigateway.model.nplus1.Vet;
-import com.example.apigateway.model.nplus1.Visit;
+import com.example.apigateway.model.nplus1.Book;
+import com.example.apigateway.model.nplus1.Rating;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -21,44 +21,38 @@ public class NPlus1Controller {
     private final NPlus1Client client;
 
     @QueryMapping
-    List<Vet> vets() {
-        log.info("Getting all vets...");
-        return client.getAllVets();
+    public List<Book> books() {
+        log.info("Delegating request for getting all books...");
+        return client.getAllBooks();
     }
 
-    @QueryMapping
-    Vet vet(@Argument int id) {
-        log.info("Getting vet with id {}", id);
-        return client.getVetById(id);
+//    @SchemaMapping
+//    public List<Rating> ratings(Book book) {
+//        log.info("Fetching rating for book, id {}", book.id());
+//        return client.getRatingsByBookId(book.id());
+//    }
+
+    @BatchMapping
+    public Map<Book, List<Rating>> ratings(List<Book> books) {
+        log.info("Fetching ratings for all books");
+
+        var response = client.getAllRatingsByBookIds(books.stream().map(Book::id).toList());
+
+        return mapBookIdsToBooks(response.getRatingsByBookIds(), books);
     }
 
-    @QueryMapping
-    List<Visit> visits(@Argument int petId) {
-        log.info("Getting all visits for pet with id {}", petId);
-        return client.getAllVisitsForPet(petId);
-    }
+    private Map<Book, List<Rating>> mapBookIdsToBooks(Map<Integer, List<Rating>> ratingsForBooks, List<Book> books) {
+        Map<Book, List<Rating>> map = new HashMap<>();
 
-    @QueryMapping
-    List<Pet> pets() {
-        log.info("Getting all pets...");
-        return client.getAllPets();
-    }
-
-    @QueryMapping
-    Pet pet(@Argument int id) {
-        log.info("Getting pet by id {}", id);
-        return client.getPetById(id);
-    }
-
-    @SchemaMapping(typeName = "Visit")
-    public Vet treatingVet(Visit visit) {
-        if (visit.getTreatingVetId() == null) {
-            return null;
+        for (Integer bookId : ratingsForBooks.keySet()) {
+            map.put(getById(books, bookId), ratingsForBooks.get(bookId));
         }
 
-        log.info("Delegating loading of Vet with id {} from REST", visit.getTreatingVetId());
+        return map;
+    }
 
-        return client.getVetById(visit.getTreatingVetId());
+    private Book getById(List<Book> books, int id) {
+        return books.stream().filter(book -> book.id() == id).findFirst().orElse(null);
     }
 
 }

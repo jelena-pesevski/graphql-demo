@@ -4,17 +4,5 @@ type Query{
     orders: [OrderResponse!]!
     ordersByCustomerId(customerId:ID): [OrderResponse!]!
 
-    # Return all known veterinaries
-    vets: [Vet!]!
-
-    # Return the specified Vet or null if undefined
-    vet(id: Int!): Vet
-
-    # Return the Pet with the specified id
-    pet(id: Int!): Pet
-
-    # Return a List of all pets that have been registered in the PetClinic
-    pets: [Pet!]!
-
-    visits(petId: ID): [Visit!]!
+    books: [Book]
 }

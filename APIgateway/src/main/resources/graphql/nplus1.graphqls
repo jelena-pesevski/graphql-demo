@@ -1,33 +1,15 @@
-# A Vetenerian
-type Vet {
-    id: Int!
-
-    # The Vetenarian's first name
-    firstName: String!
-
-    # The Vetenarian's last name
-    lastName: String!
-
+type Book {
+    id : ID
+    name : String
+    author: String
+    price: Float
+    ratings: [Rating]
 }
 
-# A Visit of a Pet in our PetClinic
-type Visit {
-    id: Int!
-
-    pet: Pet
-
-    """The vet id (for debugging/demo only)"""
-    treatingVet: Vet
-
-}
-
-# A pet that might or might not have been seen in this petclinic for
-# one or more visits
-type Pet {
-    id: Int!
-    name: String!
-
-    # All visits to our PetClinic of this Pet
-    visits: [Visit!]!
+type Rating {
+    id: ID
+    rating: Int
+    comment: String
+    user: String
 }
 
