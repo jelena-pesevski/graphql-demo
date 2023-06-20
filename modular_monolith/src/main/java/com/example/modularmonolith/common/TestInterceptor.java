@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * Interceptor whose purpose is just to show how header is present in the requests sent by FeignClient.
+ * Interceptor whose purpose is just to show how header is present in the requests sent by
+ * FeignClient.
  */
 @Slf4j
 @Component

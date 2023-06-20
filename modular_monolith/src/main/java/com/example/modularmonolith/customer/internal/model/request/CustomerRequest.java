@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CustomerRequest {
 
-    private String firstname;
-    private String lastname;
+  private String firstname;
+  private String lastname;
 }

@@ -10,13 +10,13 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public abstract class CustomerMapper {
 
-    public abstract Customer toDto(CustomerRequest customerRequest);
+  public abstract Customer toDto(CustomerRequest customerRequest);
 
-    @Mapping(source = "customer", target = "fullName", qualifiedByName = "generateFullName")
-    public abstract CustomerResponse toResponse(Customer customer);
+  @Mapping(source = "customer", target = "fullName", qualifiedByName = "generateFullName")
+  public abstract CustomerResponse toResponse(Customer customer);
 
-    @Named("generateFullName")
-    public String generateFullName(Customer customer) {
-        return String.format("%s %s", customer.getFirstname(), customer.getLastname());
-    }
+  @Named("generateFullName")
+  public String generateFullName(Customer customer) {
+    return String.format("%s %s", customer.getFirstname(), customer.getLastname());
+  }
 }

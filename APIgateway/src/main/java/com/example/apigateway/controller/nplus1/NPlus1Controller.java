@@ -20,8 +20,6 @@ import reactor.core.publisher.Mono;
 /**
  * Controller which resolves GraphQL queries related to n+1 problem.
  */
-
-
 @Slf4j
 @Controller
 public class NPlus1Controller {
