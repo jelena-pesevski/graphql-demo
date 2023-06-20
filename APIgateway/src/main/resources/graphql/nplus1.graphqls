@@ -1,12 +1,12 @@
-type Book {
+type BookResponse {
     id : ID!
     name : String
     author: String
     price: Float
-    ratings: [Rating]!
+    ratings: [RatingResponse]!
 }
 
-type Rating {
+type RatingResponse {
     id: ID!
     rating: Int
     comment: String

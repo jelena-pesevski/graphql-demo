@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+/**
+ * Controller which resolves GraphQL queries related to customers.
+ */
+
 @Controller
 @RequiredArgsConstructor
 public class CustomerController {

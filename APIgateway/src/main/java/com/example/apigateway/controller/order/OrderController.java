@@ -11,6 +11,10 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+/**
+ * Controller which resolves GraphQL queries related to orders.
+ */
+
 @Controller
 @RequiredArgsConstructor
 public class OrderController {

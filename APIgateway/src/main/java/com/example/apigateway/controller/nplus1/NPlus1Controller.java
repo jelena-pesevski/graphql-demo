@@ -1,8 +1,8 @@
 package com.example.apigateway.controller.nplus1;
 
 import com.example.apigateway.feign.NPlus1Client;
-import com.example.apigateway.model.nplus1.Book;
-import com.example.apigateway.model.nplus1.Rating;
+import com.example.apigateway.model.nplus1.BookResponse;
+import com.example.apigateway.model.nplus1.RatingResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -17,6 +17,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+
+/**
+ * Controller which resolves GraphQL queries related to n+1 problem.
+ */
+
 
 @Slf4j
 @Controller
@@ -35,30 +40,30 @@ public class NPlus1Controller {
     }
 
     @QueryMapping
-    public List<Book> books() {
+    public List<BookResponse> books() {
         log.info("Delegating request for getting all books...");
         return client.getAllBooks();
     }
 
     @QueryMapping
-    public List<Rating> ratingsByBookId(@Argument int bookId) {
+    public List<RatingResponse> ratingsByBookId(@Argument int bookId) {
         log.info("Delegating request for getting all ratings for book with id: {}", bookId);
         return client.getRatingsByBookId(bookId);
     }
 
     @QueryMapping
-    public Book bookById(@Argument int id) {
+    public BookResponse bookById(@Argument int id) {
         log.info("Delegating request for getting all ratings for book with id: {}", id);
         return client.getBookById(id);
     }
 
     //@SchemaMapping which solves n+1 problem using DataLoader
     @SchemaMapping
-    public CompletableFuture<List<Rating>> ratings(Book book, DataLoader<Integer, List<Rating>> loader) {
+    public CompletableFuture<List<RatingResponse>> ratings(BookResponse book, DataLoader<Integer, List<RatingResponse>> loader) {
         return loader.load(book.id());
     }
 
-    private Map<Integer, List<Rating>> executeCall(Set<Integer> booksIds) {
+    private Map<Integer, List<RatingResponse>> executeCall(Set<Integer> booksIds) {
         log.info("Fetching ratings for books with ids: {}", booksIds);
 
         var response = client.getAllRatingsByBookIds(List.copyOf(booksIds));
@@ -85,8 +90,8 @@ public class NPlus1Controller {
 //        return mapBookIdsToBooks(response.getRatingsByBookIds(), books);
 //    }
 
-    private Map<Book, List<Rating>> mapBookIdsToBooks(Map<Integer, List<Rating>> ratingsForBooks, List<Book> books) {
-        Map<Book, List<Rating>> map = new HashMap<>();
+    private Map<BookResponse, List<RatingResponse>> mapBookIdsToBooks(Map<Integer, List<RatingResponse>> ratingsForBooks, List<BookResponse> books) {
+        Map<BookResponse, List<RatingResponse>> map = new HashMap<>();
 
         for (Integer bookId : ratingsForBooks.keySet()) {
             map.put(getById(books, bookId), ratingsForBooks.get(bookId));
@@ -95,7 +100,7 @@ public class NPlus1Controller {
         return map;
     }
 
-    private Book getById(List<Book> books, int id) {
+    private BookResponse getById(List<BookResponse> books, int id) {
         return books.stream().filter(book -> book.id() == id).findFirst().orElse(null);
     }
 

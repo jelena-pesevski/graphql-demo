@@ -1,6 +1,6 @@
 package com.example.modularmonolith.nplus1.controller;
 
-import com.example.modularmonolith.nplus1.model.Book;
+import com.example.modularmonolith.nplus1.model.response.BookResponse;
 import com.example.modularmonolith.nplus1.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +18,12 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> getAll() {
+    public List<BookResponse> getAll() {
         return bookService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Book getById(@PathVariable int id) {
+    public BookResponse getById(@PathVariable int id) {
         return bookService.getById(id);
     }
 

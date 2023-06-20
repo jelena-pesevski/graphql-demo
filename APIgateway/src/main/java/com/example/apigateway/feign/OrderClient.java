@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+/**
+ * FeignClient for communication with Orders module.
+ */
+
 @FeignClient(name = "orders-client", url = "${config.main-app.url}")
 public interface OrderClient {
 

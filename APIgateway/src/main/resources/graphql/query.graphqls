@@ -1,10 +1,11 @@
 type Query{
     customers: [CustomerResponse!]!
     customerById(id:ID): CustomerResponse
+
     orders: [OrderResponse!]!
     ordersByCustomerId(customerId:ID): [OrderResponse!]!
 
-    books: [Book]
-    bookById(id:ID): Book
-    ratingsByBookId(bookId:Int): [Rating]
+    books: [BookResponse]
+    bookById(id:ID): BookResponse
+    ratingsByBookId(bookId:Int): [RatingResponse]
 }

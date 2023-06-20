@@ -17,6 +17,7 @@ public class CustomerService {
 
     public List<CustomerResponse> getAll() {
         log.info("API Gateway -  sending get all customers request to modulith");
+
         return customerClient.getAll();
     }
 

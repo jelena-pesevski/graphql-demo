@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
+/**
+ * FeignClient for communication with Customer module.
+ */
+
 @FeignClient(name = "customer-client", url = "${config.main-app.url}")
 public interface CustomerClient {
 

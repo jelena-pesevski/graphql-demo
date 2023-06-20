@@ -18,6 +18,7 @@ public class OrderService {
 
     public List<OrderResponse> getAll() {
         log.info("API Gateway -  sending get all orders request to modulith");
+
         return orderClient.getAll();
     }
 
@@ -29,6 +30,7 @@ public class OrderService {
 
     public OrderResponse createOrder(OrderRequest orderRequest) {
         log.info("API Gateway - sending create order request to modulith");
+
         return orderClient.createOrder(orderRequest);
     }
 }
