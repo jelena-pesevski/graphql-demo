@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class OrderResponse {
 
-    private int id;
-    private double price;
-    private int customerId;
+  private int id;
+  private double price;
+  private int customerId;
 }

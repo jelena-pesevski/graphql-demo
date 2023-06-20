@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class Order {
 
-    private int id;
-    private double price;
-    private int customerId;
+  private int id;
+  private double price;
+  private int customerId;
 }

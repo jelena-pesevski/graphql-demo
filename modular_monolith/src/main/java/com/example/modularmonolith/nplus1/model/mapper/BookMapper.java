@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-    BookResponse toResponse(Book book);
+  BookResponse toResponse(Book book);
 }

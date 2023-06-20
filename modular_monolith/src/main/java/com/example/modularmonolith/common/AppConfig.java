@@ -6,7 +6,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Config for adding interceptor.
  */
-
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
 

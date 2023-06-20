@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class OrderRequest {
 
-    private double price;
-    private int customerId;
+  private double price;
+  private int customerId;
 }

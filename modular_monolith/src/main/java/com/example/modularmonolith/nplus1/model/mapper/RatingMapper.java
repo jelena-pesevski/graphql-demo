@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface RatingMapper {
 
-    RatingResponse toResponse(Rating rating);
+  RatingResponse toResponse(Rating rating);
 }
