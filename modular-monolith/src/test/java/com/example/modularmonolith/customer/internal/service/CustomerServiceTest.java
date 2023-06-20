@@ -51,7 +51,7 @@ class CustomerServiceTest {
 
         List<CustomerResponse> customerResponses = customerService.getAll();
 
-        assertThat(customerResponses).hasSize(0);
+        assertThat(customerResponses).isEmpty();
     }
 
 
