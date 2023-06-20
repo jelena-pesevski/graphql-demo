@@ -70,23 +70,23 @@ public class NPlus1Controller {
   }
 
   //@SchemaMapping which causes n+1 problem
-//    @SchemaMapping
-//    public List<Rating> ratings(Book book) {
-//        log.info("Fetching rating for book, id {}", book.id());
-//        return client.getRatingsByBookId(book.id());
-//    }
+//  @SchemaMapping
+//  public List<Rating> ratings(Book book) {
+//    log.info("Fetching rating for book, id {}", book.id());
+//    return client.getRatingsByBookId(book.id());
+//  }
 
   //@BatchMapping solves n+1 problem
-//    @BatchMapping
-//    public Map<Book, List<Rating>> ratings(List<Book> books) {
-//        List<Integer> booksIds = books.stream().map(Book::id).toList();
+//  @BatchMapping
+//  public Map<Book, List<Rating>> ratings(List<Book> books) {
+//    List<Integer> booksIds = books.stream().map(Book::id).toList();
 //
-//        log.info("Fetching ratings for books with ids: {}", booksIds);
+//    log.info("Fetching ratings for books with ids: {}", booksIds);
 //
-//        var response = client.getAllRatingsByBookIds(booksIds);
+//    var response = client.getAllRatingsByBookIds(booksIds);
 //
-//        return mapBookIdsToBooks(response.getRatingsByBookIds(), books);
-//    }
+//    return mapBookIdsToBooks(response.getRatingsByBookIds(), books);
+//  }
 
   private Map<BookResponse, List<RatingResponse>> mapBookIdsToBooks(
       Map<Integer, List<RatingResponse>> ratingsForBooks, List<BookResponse> books) {

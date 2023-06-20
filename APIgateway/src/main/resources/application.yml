@@ -6,10 +6,18 @@ spring:
   graphql:
     graphiql:
       enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            logger-level: FULL
 
 logging:
   level:
-    feign: debug
+    com.example.apigateway.feign: DEBUG
+
+
 
 
 
