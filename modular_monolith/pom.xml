@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>modular_monolith</artifactId>
+    <artifactId>modular-monolith</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>modular_monolith</name>
-    <description>modular_monolith</description>
+    <name>modular-monolith</name>
+    <description>modular-monolith</description>
     <properties>
         <java.version>17</java.version>
     </properties>
