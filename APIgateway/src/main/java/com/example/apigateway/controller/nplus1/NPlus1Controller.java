@@ -7,15 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
-import org.dataloader.DataLoader;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.execution.BatchLoaderRegistry;
 import org.springframework.stereotype.Controller;
-import reactor.core.publisher.Mono;
 
 /**
  * Controller which resolves GraphQL queries related to n+1 problem.
@@ -29,11 +26,11 @@ public class NPlus1Controller {
   public NPlus1Controller(NPlus1Client client, BatchLoaderRegistry batchLoaderRegistry) {
     this.client = client;
 
-    batchLoaderRegistry.forTypePair(Integer.class, List.class)
-        .registerMappedBatchLoader((booksIds, env) -> {
-          Map map = executeCall(booksIds);
-          return Mono.just(map);
-        });
+//    batchLoaderRegistry.forTypePair(Integer.class, List.class)
+//        .registerMappedBatchLoader((booksIds, env) -> {
+//          Map map = executeCall(booksIds);
+//          return Mono.just(map);
+//        });
   }
 
   @QueryMapping
@@ -50,16 +47,16 @@ public class NPlus1Controller {
 
   @QueryMapping
   public BookResponse bookById(@Argument int id) {
-    log.info("Delegating request for getting all ratings for book with id: {}", id);
+    log.info("Delegating request for getting book with id: {}", id);
     return client.getBookById(id);
   }
 
   //@SchemaMapping which solves n+1 problem using DataLoader
-  @SchemaMapping
-  public CompletableFuture<List<RatingResponse>> ratings(BookResponse book,
-      DataLoader<Integer, List<RatingResponse>> loader) {
-    return loader.load(book.id());
-  }
+//  @SchemaMapping
+//  public CompletableFuture<List<RatingResponse>> ratings(BookResponse book,
+//      DataLoader<Integer, List<RatingResponse>> loader) {
+//    return loader.load(book.id());
+//  }
 
   private Map<Integer, List<RatingResponse>> executeCall(Set<Integer> booksIds) {
     log.info("Fetching ratings for books with ids: {}", booksIds);
@@ -71,22 +68,22 @@ public class NPlus1Controller {
 
   //@SchemaMapping which causes n+1 problem
 //  @SchemaMapping
-//  public List<Rating> ratings(Book book) {
+//  public List<RatingResponse> ratings(BookResponse book) {
 //    log.info("Fetching rating for book, id {}", book.id());
 //    return client.getRatingsByBookId(book.id());
 //  }
 
   //@BatchMapping solves n+1 problem
-//  @BatchMapping
-//  public Map<Book, List<Rating>> ratings(List<Book> books) {
-//    List<Integer> booksIds = books.stream().map(Book::id).toList();
-//
-//    log.info("Fetching ratings for books with ids: {}", booksIds);
-//
-//    var response = client.getAllRatingsByBookIds(booksIds);
-//
-//    return mapBookIdsToBooks(response.getRatingsByBookIds(), books);
-//  }
+  @BatchMapping
+  public Map<BookResponse, List<RatingResponse>> ratings(List<BookResponse> books) {
+    List<Integer> booksIds = books.stream().map(BookResponse::id).toList();
+
+    log.info("Fetching ratings for books with ids: {}", booksIds);
+
+    var response = client.getAllRatingsByBookIds(booksIds);
+
+    return mapBookIdsToBooks(response.getRatingsByBookIds(), books);
+  }
 
   private Map<BookResponse, List<RatingResponse>> mapBookIdsToBooks(
       Map<Integer, List<RatingResponse>> ratingsForBooks, List<BookResponse> books) {
