@@ -14,14 +14,14 @@ public class CustomerService {
 
   private final CustomerClient customerClient;
 
-  public List<CustomerResponse> getAll() {
+  public List<CustomerResponse> getAll(String token) {
     log.info("API Gateway -  sending get all customers request to modulith");
 
-    return customerClient.getAll();
+    return customerClient.getAll(token);
   }
 
-  public CustomerResponse getById(int id) {
-    String token = "token";
+  public CustomerResponse getById(int id, String token) {
+  //  String token = "token";
 
     log.info("API Gateway -  sending get customer by id request to modulith");
 

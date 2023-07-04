@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface CustomerClient {
 
   @GetMapping("/customers")
-  List<CustomerResponse> getAll();
+  List<CustomerResponse> getAll(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken);
 
   @GetMapping("/customers/{id}")
   CustomerResponse getById(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken,

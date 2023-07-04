@@ -17,6 +17,13 @@ logging:
   level:
     com.example.apigateway.feign: DEBUG
 
+security:
+  jwt:
+    token-expiration-time: 15
+    token-secret: kPJlyJLpui
+    header-name: Authorization
+    header-prefix: Bearer
+
 
 
 
