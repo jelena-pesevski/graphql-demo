@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.apigateway.security.config.JwtConfig;
 import com.example.apigateway.security.model.CustomUserDetails;
+import com.example.apigateway.security.model.Role;
 import com.example.apigateway.security.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,6 +41,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     checkAuthorization(authorizationHeader, request, response, filterChain);
+
   }
 
   private void checkAuthorization(String authorizationHeader, HttpServletRequest request,
@@ -66,7 +68,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
   private CustomUserDetails getCustomUserDetails(DecodedJWT decodedJWT) {
     return CustomUserDetails.builder()
-        .id(decodedJWT.getClaim("id").asInt()).username(decodedJWT.getSubject()).build();
+        .id(decodedJWT.getClaim("id").asInt()).username(decodedJWT.getSubject())
+        .role(Role.valueOf(decodedJWT.getClaim("role").asString())).build();
   }
 
   private void setAuthentication(CustomUserDetails customUserDetails) {

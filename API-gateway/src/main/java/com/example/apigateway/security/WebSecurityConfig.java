@@ -6,9 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,9 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
   private final AuthorizationFilter authorizationFilter;
@@ -45,14 +47,15 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-    http.csrf(AbstractHttpConfigurer::disable) // (1)
+    http // (1)
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
     http.authorizeHttpRequests(auth ->
         auth.requestMatchers("/auth/**").permitAll()
             .anyRequest()
-            .authenticated());
+            .authenticated())
+        .csrf(csrf -> csrf.disable());
     //.httpBasic(Customizer.withDefaults());
 
     http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);

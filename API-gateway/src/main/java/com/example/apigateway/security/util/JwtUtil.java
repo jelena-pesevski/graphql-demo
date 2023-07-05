@@ -22,6 +22,8 @@ public class JwtUtil {
   public String generateJwt(User user) {
     Algorithm algorithm = Algorithm.HMAC512(jwtConfig.getTokenSecret());
     return JWT.create().withSubject(user.getUsername()).withClaim("id", user.getId())
+        .withClaim("role",
+            user.getRole().name())
         .withExpiresAt(LocalDateTime.now().plusMinutes(jwtConfig.getTokenExpirationTime()).atZone(
             ZoneId.systemDefault()).toInstant()).sign(algorithm);
   }

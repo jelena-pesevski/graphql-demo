@@ -28,7 +28,7 @@ public class AuthController {
 
     return jwtUtil.generateJwt(
         User.builder().id(principal.getId()).username(principal.getUsername())
-            .password(principal.getPassword()).build());
+            .password(principal.getPassword()).role(principal.getRole()).build());
   }
 
   private CustomUserDetails getCustomUserDetailsObject(LoginRequest loginRequest) {
