@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * FeignClient for communication with Orders module.
  */
-@FeignClient(name = "orders-client", url = "${config.main-app.url}")
+@FeignClient(name = "orders-client", url = "${config.main-app.url}", configuration = FeignConfig.class)
 public interface OrderClient {
 
   @GetMapping("/orders")
