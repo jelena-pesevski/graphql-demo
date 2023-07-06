@@ -20,6 +20,7 @@ public class CustomUserDetails implements UserDetails {
   private String username;
   private String password;
   private Role role;
+  private String jwtToken;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

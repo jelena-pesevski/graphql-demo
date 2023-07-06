@@ -22,7 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AuthorizationFilter extends OncePerRequestFilter {
+public class CustomFilter extends OncePerRequestFilter {
 
   private final JwtUtil jwtUtil;
   private final JwtConfig jwtConfig;
@@ -62,6 +62,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     DecodedJWT decodedJWT = jwtUtil.parseJwt(token);
 
     CustomUserDetails customUserDetails = getCustomUserDetails(decodedJWT);
+    customUserDetails.setJwtToken(token);
 
     setAuthentication(customUserDetails);
   }
@@ -76,6 +77,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     Authentication authentication =
         new UsernamePasswordAuthenticationToken(customUserDetails, null,
             customUserDetails.getAuthorities());
+
     SecurityContextHolder.getContext().setAuthentication(authentication);
   }
 }

@@ -13,6 +13,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
   @Override
   public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return new CustomUserDetails(1, "test", "$2a$10$5fSkteFqvPfBV0dsHjYZcu.LmXGTrO7Tsi26IcxuN8eAwoI9te34C", Role.USER);
+    return CustomUserDetails.builder().id(1).username("test")
+        .password("$2a$10$5fSkteFqvPfBV0dsHjYZcu.LmXGTrO7Tsi26IcxuN8eAwoI9te34C").role(Role.USER)
+        .build();
   }
 }

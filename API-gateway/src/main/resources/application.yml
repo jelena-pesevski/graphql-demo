@@ -12,7 +12,9 @@ spring:
         config:
           default:
             logger-level: FULL
-
+  security:
+    filter:
+      dispatcher-types: REQUEST,ERROR
 logging:
   level:
     com.example.apigateway.feign: DEBUG
