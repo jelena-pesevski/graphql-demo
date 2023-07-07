@@ -1,29 +1,34 @@
 package com.example.apigateway.feign;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
+import java.io.InputStream;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
 @Slf4j
+@RequiredArgsConstructor
 public class CustomErrorDecoder implements ErrorDecoder {
+
+  private final ObjectMapper objectMapper;
 
   @Override
   public Exception decode(String s, Response response) {
-    String requestUrl = response.request().url();
     Response.Body responseBody = response.body();
     HttpStatus responseStatus = HttpStatus.valueOf(response.status());
-    String responseBodyKey = null;
+    ApiErrorResponse responseObj = null;
 
-    try {
-      responseBodyKey = new String(responseBody.asInputStream().readAllBytes());
-      log.info("****************" + responseBodyKey);
+    try (InputStream inputStream = responseBody.asInputStream()) {
+      responseObj = objectMapper.readValue(inputStream, ApiErrorResponse.class);
+      log.info(responseObj.toString());
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      log.error("Error parsing feign exception");
     }
 
-    return new RestException(responseBodyKey, responseStatus);
+    return new RestException(responseObj, responseStatus);
   }
 
 }

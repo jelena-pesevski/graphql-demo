@@ -1,5 +1,6 @@
 package com.example.modularmonolith.order.application;
 
+import com.example.modularmonolith.common.ApiErrorResponse;
 import com.example.modularmonolith.order.internal.model.request.OrderRequest;
 import com.example.modularmonolith.order.internal.model.response.OrderResponse;
 import com.example.modularmonolith.order.internal.service.OrderService;
@@ -34,9 +35,10 @@ public class OrderController {
   @GetMapping("/customer/{id}")
   public ResponseEntity<?> getAllByCustomerId(@PathVariable int id) {
     log.info("before throwing exception");
-    return new ResponseEntity<>("KLJUC", HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(ApiErrorResponse.builder().messageKey("KLJUC").message("poruka").build(), HttpStatus.NOT_FOUND);
   }
 
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @PostMapping
   public OrderResponse createOrder(@RequestBody OrderRequest orderRequest) {
     return orderService.createOrder(orderRequest);
